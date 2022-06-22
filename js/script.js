@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-export default class Sketch {
+export default class Canvas {
     constructor(options) {
         this.time = 0
         this.container = options.dom;
@@ -46,6 +46,6 @@ export default class Sketch {
     }
 }
 
-new Sketch({
+new Canvas({
     dom:document.getElementById('container')
 })
