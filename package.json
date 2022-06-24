@@ -2,7 +2,10 @@
   "dependencies": {
     "three": "^0.141.0"
   },
-  "scripts":{
+  "scripts": {
     "start": "parcel serve index.html"
+  },
+  "devDependencies": {
+    "@parcel/transformer-glsl": "2.6.2"
   }
 }
