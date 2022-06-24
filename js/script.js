@@ -1,4 +1,7 @@
 import * as THREE from 'three'
+import vertex from '../shaders/vertexshader.glsl'
+import fragment from '../shaders/fragmentshader.glsl'
+import '../styles/main.css'
 export default class Canvas {
     constructor(options) {
         this.time = 0
@@ -33,14 +36,19 @@ export default class Canvas {
 
     addObjects() {
         this.geomentry = new THREE.PlaneBufferGeometry();
-        this.material = new THREE.MeshBasicMaterial();
-        this.mesh = new THREE.Mesh(this.geomentry, this.material)
-        this.scene.add(this.mesh)
+        this.material = new THREE.ShaderMaterial({
+            uniforms:{uTime: {value: 0}},
+            vertexShader: vertex,
+            fragmentShader:  fragment,
+            wireframe: false
+        })
+        this.mesh = new THREE.Mesh(this.geomentry, this.material);
+        this.scene.add(this.mesh);
      }
 
     render() {
         this.time += .05;
-        // console.log(this.renderer)
+        this.material.uniforms.uTime.value = this.time;
         this.renderer.render(this.scene, this.camera);
         window.requestAnimationFrame(this.render.bind(this));
     }
