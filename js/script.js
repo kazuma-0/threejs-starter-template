@@ -9,8 +9,9 @@ export default class Canvas {
         this.height = this.container.offsetHeight;
         this.width = this.container.offsetWidth;
         this.scene = new THREE.Scene();
-        this.camera = new THREE.PerspectiveCamera(70, this.width/this.height )
-        this.camera.position.z = 1; 
+        let fov = 2 * Math.atan((this.height / 2) / 1) * (180 / Math.PI);
+        this.camera = new THREE.PerspectiveCamera(fov, this.width / this.height)
+        this.camera.position.z = 1;
         this.renderer = new THREE.WebGLRenderer({
             antialias: true,
             // alpha: true
@@ -23,28 +24,28 @@ export default class Canvas {
     }
 
 
-    setupResize(){
+    setupResize() {
         window.addEventListener('resize', this.resize.bind(this))
     }
     resize() {
         this.height = this.container.offsetHeight
         this.width = this.container.offsetWidth
         this.renderer.setSize(this.width, this.height)
-        this.camera.aspect = this.width/this.height
+        this.camera.aspect = this.width / this.height
         this.camera.updateProjectionMatrix()
     }
 
     addObjects() {
-        this.geomentry = new THREE.PlaneBufferGeometry();
+        this.geomentry = new THREE.PlaneBufferGeometry(200, 200);
         this.material = new THREE.ShaderMaterial({
-            uniforms:{uTime: {value: 0}},
+            uniforms: { uTime: { value: 0 } },
             vertexShader: vertex,
-            fragmentShader:  fragment,
+            fragmentShader: fragment,
             wireframe: false
         })
         this.mesh = new THREE.Mesh(this.geomentry, this.material);
         this.scene.add(this.mesh);
-     }
+    }
 
     render() {
         this.time += .05;
@@ -55,5 +56,5 @@ export default class Canvas {
 }
 
 new Canvas({
-    dom:document.getElementById('container')
+    dom: document.getElementById('container')
 })
